@@ -22,7 +22,7 @@ pipeline {
                 '''
             }
         }
-        stage('Run Playwright Tests (Headless)') {
+        stage('Run Playwright Tests (Headed)') {
             steps {
                 bat '''
                     npx playwright test --workers=4 --reporter=html || exit /b %ERRORLEVEL%
