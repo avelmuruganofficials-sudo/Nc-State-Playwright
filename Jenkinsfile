@@ -39,6 +39,7 @@ pipeline {
     post {
         always {
             echo "Pipeline finished. Check artifacts and test reports."
+            junit 'test-results/**/*.xml'
         }
         success { echo ":white_check_mark: Jenkins tests passed!" }
         failure { echo ":x: Jenkins tests failed!" }
