@@ -74,7 +74,7 @@ test('Excel data based automation', async ({ page }) => {
       await page.locator('button#sendMail > span').click();
       await page.waitForLoadState('networkidle');
       const fileInput = page.locator('input[type="file"]');
-      await fileInput.setInputFiles('file:///C:/Users/avelm/Downloads/IL7324_GROU009_RAB4451037-26_830197_858_4278707.pdf');
+      await fileInput.setInputFiles('C:/Users/avelm/Downloads/IL7324_GROU009_RAB4451037-26_830197_858_4278707.pdf');
       await page.locator("div[class='col-sm-6 ng-star-inserted'] td[class='ng-star-inserted']").click();
 
       await page.waitForTimeout(3000);
