@@ -33,6 +33,8 @@ pipeline {
             steps {
                 bat '''
       npx playwright test --headed --workers=1 
+      echo ==== FILE LIST ====
+      dir
     '''
             }
         }
