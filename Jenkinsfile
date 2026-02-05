@@ -32,14 +32,14 @@ pipeline {
         stage('Run Playwright Tests (Headed)') {
             steps {
                 bat '''
-                    npx playwright test --workers=4 --reporter=html || exit /b %ERRORLEVEL%
+                     bat 'npx playwright test --headed --workers=1 --reporter=html,junit'
                 '''
             }
         }
         stage('Archive Reports') {
             steps {
-                archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
-                junit 'playwright-report/**/*.xml'
+               archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true
+    junit 'playwright-report/*.xml'
             }
         }
     }
