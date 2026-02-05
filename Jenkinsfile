@@ -32,9 +32,9 @@ pipeline {
         stage('Run Playwright Tests (Headed)') {
             steps {
                 bat '''
-      npx playwright test --headed --workers=1 
-      echo ==== FILE LIST ====
-      dir
+        npx playwright test --headed --workers=1
+
+
     '''
             }
         }
