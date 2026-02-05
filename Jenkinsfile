@@ -36,12 +36,13 @@ pipeline {
     '''
             }
         }
-        stage('Archive Reports') {
-            steps {
-               archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true
-    junit 'playwright-report/*.xml'
-            }
-        }
+       stage('Archive Reports') {
+  steps {
+    archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true
+    junit 'playwright-report/results.xml'
+  }
+}
+
     }
     post {
         always {

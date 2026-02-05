@@ -10,8 +10,7 @@ export default defineConfig({
   // :white_check_mark: HTML + Allure reporter
   reporter: [
    ['html'],
-  ['junit', { outputFile: 'playwright-report/results.xml' }]
-    // ['allure-playwright']
+    ['junit', { outputFile: 'playwright-report/results.xml' }]
   ],
   use: {
     headless: true,
