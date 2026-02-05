@@ -32,7 +32,7 @@ pipeline {
         stage('Run Playwright Tests (Headed)') {
             steps {
                 bat '''
-      npx playwright test --headed --workers=1 --reporter=html,junit
+      npx playwright test --headed --workers=1 
     '''
             }
         }
