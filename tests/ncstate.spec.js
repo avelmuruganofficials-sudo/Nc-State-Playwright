@@ -11,7 +11,9 @@ test('Excel data based automation', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Password' }).fill('Test@123');
   await page.getByRole('button', { name: 'Login' }).click();
   for (let i = 0; i < data.length; i++) {
+     const rowNumber = i + 1;
     const row = data[i];
+     const RiskId = row.RiskId;
     console.log(`Starting row ${rowNumber} RiskId: ${RiskId}`);
 
     if (!RiskId) {
