@@ -1,23 +1,27 @@
 import { test, expect } from '@playwright/test';
 import xlsx from 'xlsx';
+import path from 'path';
 test.setTimeout(30 * 60 * 1000); // 30 minutes
-const workbook = xlsx.readFile('./tests/DATA/RESTD AllState.xlsx');
+const workbook = xlsx.readFile(path.join(process.cwd(), 'tests', 'DATA', 'RESTD AllState.xlsx'));
 const sheet = workbook.Sheets[workbook.SheetNames[0]];
 const data = xlsx.utils.sheet_to_json(sheet);
 test('Excel data based automation', async ({ page }) => {
   await page.goto('https://www.landydev.com/#/auth/login');
-  await page.waitForLoadState('networkidle');
+  await page.waitForLoadState('domcontentloaded');
   await page.getByRole('textbox', { name: 'Email' }).fill('velmueugan@stepladdersolutions.com');
   await page.getByRole('textbox', { name: 'Password' }).fill('Test@123');
-  await page.getByRole('button', { name: 'Login' }).click();
-
+  await page.getByRole('button', { name: 'Login' });
+  await loginBtn.waitFor({ state: 'visible', timeout: 60000 });
+  await loginBtn.click();
   for (let i = 0; i < data.length; i++) {
     const row = data[i];
-    console.log(`Starting row ${i + 1} RiskId: ${row.RiskId}`);
+   console.log(`Starting row ${i + 1}`, row);
     try {
       await page.goto('https://www.landydev.com/#/pages/riskPolicySearch');
       await page.waitForLoadState('networkidle');
-      await page.getByRole('button', { name: '   New Application' }).click();
+      await page.getByRole('button', { name: '   New Application' });
+       await newAppBtn.waitFor({ state: 'visible', timeout: 120000 });
+await newAppBtn.click();
       await page.getByLabel('State').selectOption(row.State);
       await page.locator('#state').nth(1).selectOption(row.Lob);
       const producer = page.getByRole('textbox', { name: 'Pick a producer' });
@@ -39,7 +43,7 @@ test('Excel data based automation', async ({ page }) => {
       await page.locator('input[name="effDate1"]').fill(new Date().toISOString().split('T')[0]);
       await page.getByLabel('Retroactive Date ---Choose an').selectOption(row.PriorCheck);
       await page.getByRole('button', { name: 'save & Close' }).click();
-      await page.getByText('Application Details').click();
+      await page.getByText('Application Details', { timeout: 60000 }).click();
       await page.getByPlaceholder('Full Time').click();
       await page.getByPlaceholder('Full Time').fill(row.AppDetlFullTimeProfessionals);
       await page.locator('select[name="typeOfFirmReId"]').selectOption(row.AppDetlTypeOfFirm);
@@ -66,14 +70,17 @@ test('Excel data based automation', async ({ page }) => {
       await page.getByText(row.QutSelContDeductibleType).click();
       await page.getByRole('button', { name: 'save & Close' }).click();
       await page.waitForTimeout(2000);
-      await page.getByRole('button', { name: ' Rate' }).click();
-      await page.waitForLoadState('networkidle');
+      await page.getByRole('button', { name: ' Rate' });
+await rateBtn.waitFor({ state: 'visible', timeout: 120000 });
+await rateBtn.click();
+await page.waitForLoadState('domcontentloaded');
+     
       await page.locator('//table//tr[1]/td[2]//button[3]').click();
       const today = new Date().toISOString().split('T')[0];
       await page.locator('div input#minDate').fill(today);
       await page.locator('button#save').click();
       await page.locator('button#sendMail > span').click();
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
       await page.locator("div[class='col-sm-6 ng-star-inserted'] td[class='ng-star-inserted']").click();
       await page.waitForTimeout(3000);
       await page.locator('//*[@id="moveToAccounting"]').click();
@@ -81,7 +88,7 @@ test('Excel data based automation', async ({ page }) => {
       await page.waitForTimeout(3000);
       // ****************************Payment**************************
       await page.getByRole('link', { name: 'Payment', exact: true }).click();
-      await page.waitForLoadState('networkidle');
+     await page.waitForLoadState('domcontentloaded');
       const balanceText = await page.locator("//ngx-payment-tab//tr[2]/td[9]").innerText();
       // const balanceText = await page.locator("//td[contains(@class,'text-right')]//span").innerText();
       const balanceValue = balanceText
