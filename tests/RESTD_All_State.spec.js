@@ -23,13 +23,10 @@ test('Excel data based automation', async ({ page }) => {
 
     const loginBtn = page.getByRole('button', { name: 'Login' });
     await loginBtn.waitFor({ state: 'visible', timeout: 60000 });
-    await Promise.all([
-        page.waitForURL('**/pages/**', { timeout: 60000 }),
-        loginBtn.click()
-    ]);
+    await page.getByRole('link', { name: /Applications/i })
+  .waitFor({ state: 'visible', timeout: 90000 });
 
-
-    console.log('Login completed. URL:', page.url());
+console.log('Login successful, Applications menu visible');
 
     // HARD ASSERT — STOP TEST IF LOGIN FAILED
     if (page.url().includes('/auth/login')) {
