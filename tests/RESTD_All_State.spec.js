@@ -16,11 +16,15 @@ test('Excel data based automation', async ({ page }) => {
     for (let i = 0; i < data.length; i++) {
         const row = data[i];
         console.log(`Starting row ${i + 1}`, row);
+        console.log('Current URL:', page.url());
+        await page.screenshot({ path: `before-new-app-row-${i + 1}.png`, fullPage: true });
+
         try {
             await page.goto('https://www.landydev.com/#/pages/riskPolicySearch');
             await page.waitForLoadState('domcontentloaded');
 
             await page.getByRole('link', { name: /Applications/i }).click();
+            await page.waitForLoadState('networkidle');
             await page.getByLabel('State').selectOption(row.State);
             await page.locator('#state').nth(1).selectOption(row.Lob);
             const producer = page.getByRole('textbox', { name: 'Pick a producer' });
@@ -70,8 +74,7 @@ test('Excel data based automation', async ({ page }) => {
             await page.getByRole('button', { name: 'save & Close' }).click();
             await page.waitForTimeout(2000);
             await page.getByRole('button', { name: /Rate/i }).click();
-             await page.waitForLoadState('domcontentloaded');
-
+            await page.waitForLoadState('networkidle');
             await page.locator('//table//tr[1]/td[2]//button[3]').click();
             const today = new Date().toISOString().split('T')[0];
             await page.locator('div input#minDate').fill(today);
