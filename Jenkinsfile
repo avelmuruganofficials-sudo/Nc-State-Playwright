@@ -31,12 +31,8 @@ pipeline {
         }
         stage('Run Playwright Tests (Headed)') {
             steps {
-                bat '''
-       'npx playwright test --workers=1'
+               bat "npx playwright test --workers=1"
 
-
-
-    '''
             }
         }
        stage('Archive Reports') {
