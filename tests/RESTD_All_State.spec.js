@@ -63,7 +63,7 @@ test('Excel data based automation', async ({ page }) => {
             await page.getByRole('link', { name: /Applications/i }).click();
             await page.waitForLoadState('networkidle');
 
-            await page.getByLabel('State').selectOption(row.State);
+            await page.getByLabel('State').waitFor({ state: 'visible', timeout: 60000 });
             await page.locator('#state').nth(1).selectOption(row.Lob);
 
             const producer = page.getByRole('textbox', { name: 'Pick a producer' });
