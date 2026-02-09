@@ -7,7 +7,6 @@ const sheet = workbook.Sheets[workbook.SheetNames[0]];
 const data = xlsx.utils.sheet_to_json(sheet);
 test('Excel data based automation', async ({ page }) => {
     await page.goto('https://www.landydev.com');
-    await page.waitForLoadState('domcontentloaded');
     await page.getByRole('textbox', { name: 'Email' }).fill('velmueugan@stepladdersolutions.com');
     await page.getByRole('textbox', { name: 'Password' }).fill('Test@123');
     const loginBtn = page.getByRole('button', { name: 'Login' });
