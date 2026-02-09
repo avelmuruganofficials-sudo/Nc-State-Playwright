@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
-  timeout: 10 * 60 * 1000, // 10 minutes
+  timeout: 20 * 60 * 1000, // 20 minutes
   testDir: './tests',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,

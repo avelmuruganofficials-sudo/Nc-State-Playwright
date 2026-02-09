@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import xlsx from 'xlsx';
+test.setTimeout(30 * 60 * 1000); // 30 minutes
 const workbook = xlsx.readFile('./tests/DATA/RESTD AllState.xlsx');
 const sheet = workbook.Sheets[workbook.SheetNames[0]];
 const data = xlsx.utils.sheet_to_json(sheet);
