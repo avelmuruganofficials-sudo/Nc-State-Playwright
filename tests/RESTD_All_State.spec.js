@@ -20,9 +20,10 @@ test('Excel data based automation', async ({ page }) => {
             await page.goto('https://www.landydev.com/#/pages/riskPolicySearch');
             await page.waitForLoadState('domcontentloaded');
 
-            const newAppBtn = page.getByRole('button', { name: '   New Application' });
+            const newAppBtn = page.locator('button:has-text("New Application")');
             await newAppBtn.waitFor({ state: 'visible', timeout: 120000 });
             await newAppBtn.click();
+
 
             await page.getByLabel('State').selectOption(row.State);
             await page.locator('#state').nth(1).selectOption(row.Lob);
