@@ -13,7 +13,9 @@ const data = xlsx.utils.sheet_to_json(sheet);
 test('Excel data based automation', async ({ page }) => {
 
     // ===================== LOGIN =====================
-    await page.goto('https://www.landydev.com');
+    await page.goto('https://www.landydev.com', {
+        waitUntil: 'domcontentloaded'
+    });
 
     await page.getByRole('textbox', { name: 'Email' })
         .fill('velmueugan@stepladdersolutions.com');
@@ -23,16 +25,26 @@ test('Excel data based automation', async ({ page }) => {
 
     const loginBtn = page.getByRole('button', { name: 'Login' });
     await loginBtn.waitFor({ state: 'visible', timeout: 60000 });
-    await page.getByRole('link', { name: /Applications/i })
-  .waitFor({ state: 'visible', timeout: 90000 });
 
-console.log('Login successful, Applications menu visible');
+    await loginBtn.click();
 
-    // HARD ASSERT — STOP TEST IF LOGIN FAILED
-    if (page.url().includes('/auth/login')) {
-        throw new Error('Login failed – still on login page');
+    // ✅ WAIT FOR LOGIN PAGE TO DISAPPEAR
+    await page.waitForSelector(
+        'input[name="email"], input[placeholder="Email"]',
+        { state: 'detached', timeout: 90000 }
+    );
+
+    // ✅ OPTIONAL: VERIFY TOKEN
+    const token = await page.evaluate(() => {
+        return localStorage.getItem('token') ||
+            localStorage.getItem('access_token');
+    });
+
+    if (!token) {
+        throw new Error('Login failed — auth token not found');
     }
 
+    console.log('Login successful');
     // ===================== EXCEL LOOP =====================
     for (let i = 0; i < data.length; i++) {
         const row = data[i];
