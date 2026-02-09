@@ -18,7 +18,7 @@ test('Excel data based automation', async ({ page }) => {
     });
 
     await page.getByRole('textbox', { name: 'Email' })
-        .fill('velmueugan@stepladdersolutions.com');
+        .fill('velmurugan@stepladdersolutions.com');
 
     await page.getByRole('textbox', { name: 'Password' })
         .fill('Test@123');
