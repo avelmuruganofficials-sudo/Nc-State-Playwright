@@ -60,8 +60,10 @@ test('Excel data based automation', async ({ page }) => {
             await page.goto('https://www.landydev.com/#/pages/riskPolicySearch');
             await page.waitForLoadState('domcontentloaded');
 
+            await page.getByRole('link', { name: /Applications/i })
+                .waitFor({ state: 'visible', timeout: 60000 });
             await page.getByRole('link', { name: /Applications/i }).click();
-            await page.waitForLoadState('networkidle');
+
 
             await page.getByLabel('State').waitFor({ state: 'visible', timeout: 60000 });
             await page.locator('#state').nth(1).selectOption(row.Lob);
