@@ -20,11 +20,7 @@ test('Excel data based automation', async ({ page }) => {
             await page.goto('https://www.landydev.com/#/pages/riskPolicySearch');
             await page.waitForLoadState('domcontentloaded');
 
-            const newAppBtn = page.locator('button:has-text("New Application")');
-            await newAppBtn.waitFor({ state: 'visible', timeout: 120000 });
-            await newAppBtn.click();
-
-
+            await page.getByRole('link', { name: /Applications/i }).click();
             await page.getByLabel('State').selectOption(row.State);
             await page.locator('#state').nth(1).selectOption(row.Lob);
             const producer = page.getByRole('textbox', { name: 'Pick a producer' });
@@ -73,10 +69,8 @@ test('Excel data based automation', async ({ page }) => {
             await page.getByText(row.QutSelContDeductibleType).click();
             await page.getByRole('button', { name: 'save & Close' }).click();
             await page.waitForTimeout(2000);
-            await page.getByRole('button', { name: ' Rate' });
-            await rateBtn.waitFor({ state: 'visible', timeout: 120000 });
-            await rateBtn.click();
-            await page.waitForLoadState('domcontentloaded');
+            await page.getByRole('button', { name: /Rate/i }).click();
+             await page.waitForLoadState('domcontentloaded');
 
             await page.locator('//table//tr[1]/td[2]//button[3]').click();
             const today = new Date().toISOString().split('T')[0];
