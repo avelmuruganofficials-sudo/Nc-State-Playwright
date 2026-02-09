@@ -6,7 +6,7 @@ const workbook = xlsx.readFile(path.join(process.cwd(), 'tests', 'DATA', 'RESTD 
 const sheet = workbook.Sheets[workbook.SheetNames[0]];
 const data = xlsx.utils.sheet_to_json(sheet);
 test('Excel data based automation', async ({ page }) => {
-    await page.goto('https://www.landydev.com/#/auth/login');
+    await page.goto('https://www.landydev.com');
     await page.waitForLoadState('domcontentloaded');
     await page.getByRole('textbox', { name: 'Email' }).fill('velmueugan@stepladdersolutions.com');
     await page.getByRole('textbox', { name: 'Password' }).fill('Test@123');
