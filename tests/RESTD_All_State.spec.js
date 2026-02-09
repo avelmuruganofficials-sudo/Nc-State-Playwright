@@ -8,11 +8,11 @@ const data = xlsx.utils.sheet_to_json(sheet);
 test('Excel data based automation', async ({ page }) => {
   await page.goto('https://www.landydev.com/#/auth/login');
   await page.waitForLoadState('domcontentloaded');
-  await page.getByRole('textbox', { name: 'Email' }).fill('velmueugan@stepladdersolutions.com');
-  await page.getByRole('textbox', { name: 'Password' }).fill('Test@123');
-  await page.getByRole('button', { name: 'Login' });
-  await loginBtn.waitFor({ state: 'visible', timeout: 60000 });
-  await loginBtn.click();
+  await page.getByRole('textbox', { name: 'Email' }).fill('velmueugan@stepladdersolutions.com');
+ await page.getByRole('textbox', { name: 'Password' }).fill('Test@123');
+ const loginBtn = page.getByRole('button', { name: 'Login' });
+ await loginBtn.waitFor({ state: 'visible', timeout: 60000 });
+ await loginBtn.click();
   for (let i = 0; i < data.length; i++) {
     const row = data[i];
    console.log(`Starting row ${i + 1}`, row);
